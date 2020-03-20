@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+import psutil
+from sys import argv
+def cpu():
+	f = psutil.cpu_times()
+	parametrs = ['idle '+str(f.idle), 'user '+str(f.user), 'guest '+str(f.guest), 'iowait '+str(f.iowait), 'stolen '+str(f.steal), 'system '+str(f.idle)]
+	for item in parametrs:
+		print(" system.cpu.{}".format(item))
+def mem():
+	f_virt = psutil.virtual_memory()
+	parametrs_virt = ['total '+str(f_virt.total), 'used '+str(f_virt.used), 'free '+str(f_virt.free), 'shared '+str(f_virt.shared)]
+	for item in parametrs_virt:
+                print("virtual {}".format(item))
+	f_swap = psutil.swap_memory()
+	parametrs_swap = ['total '+str(f_swap.total), 'used '+str(f_swap.used), 'free '+str(f_swap.free)]
+	for item in parametrs_swap:
+		print("swap {}".format(item)) 
+try:
+	if argv[1] == 'cpu':
+		cpu()
+	elif argv[1] == 'mem':
+		mem()
+	else:
+		print("Invalid parametr. Usage: {0} cpu|mem".format(argv[0]))
+except IndexError:
+	print("You must enter the parametr. Usage: {0} cpu|mem".format(argv[0]))
